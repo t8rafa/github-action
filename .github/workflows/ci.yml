@@ -65,14 +65,13 @@ jobs:
       with:
         branch: 'rc-${{  github.sha  }}'
         sha: '${{ github.event.pull_request.head.sha }}'
-    - name: Auto Generate Next Release Tag
-      uses: amitsingh-007/next-release-tag@v2.1.0
+    - name: Create tag
+      uses: actions/github-script@v5
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Create Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ env.release_tag }}
-        release_name: Release ${{ env.release_tag }}
+        script: |
+          github.rest.git.createRef({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            ref: 'refs/tags/rc-1.0.0',
+            sha: context.sha
+          })
