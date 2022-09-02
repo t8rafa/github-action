@@ -65,8 +65,8 @@ jobs:
       with:
         branch: 'rc-${{  github.sha  }}'
         sha: '${{ github.event.pull_request.head.sha }}'
-    - name: Generate release tag
-      uses: amitsingh-007/next-release-tag@vv2.1.0
+    - name: Auto Generate Next Release Tag
+      uses: amitsingh-007/next-release-tag@v2.1.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Release
