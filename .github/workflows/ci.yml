@@ -65,11 +65,14 @@ jobs:
       with:
         branch: 'rc-${{  github.sha  }}'
         sha: '${{ github.event.pull_request.head.sha }}'
-    - name: Create GitHub release
-      uses: Roang-zero1/github-create-release-action@v2
+    - name: Generate release tag
+      uses: amitsingh-007/next-release-tag@v1.0.0
       with:
-        version_regex: ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+
-        prerelease_regex: "^v2\\.[[:digit:]]+\\.[[:digit:]]+"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Release
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+      with:
+        tag_name: ${{ env.release_tag }}
+        release_name: Release ${{ env.release_tag }}
