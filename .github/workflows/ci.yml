@@ -37,12 +37,15 @@ jobs:
           path: junit/test-results-${{ matrix.python-version }}.xml
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
-  release:
+  homologacao:
     needs: build
     name: Deploy to staging
     environment:
         name: release
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8"]
     steps:
     -  name: Set up Python ${{ matrix.python-version }}
        uses: actions/setup-python@v4
@@ -55,3 +58,20 @@ jobs:
     -  name: Test with pytest
        run: |
          pytest -q test_wallet.py
+  release:
+    needs: homologacao
+    name: creating feature candidate
+    environment:
+      name: release
+    runs-on: ubuntu-latest
+    steps:
+    - name: git create branch
+      uses: peterjgrainger/action-create-branch@v2.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        branch: 'feature-candidate'
+        sha: '${{ github.event.pull_request.head.sha }}'
+      
+
+    
