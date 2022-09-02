@@ -69,9 +69,9 @@ jobs:
     - name: creating feature branch
       uses: peterjgrainger/action-create-branch@v2.2.0
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
       with:
-        branch: feature-candidate/${{ github.head_ref }}
+        branch: 'feature-candidate/${{ github.head_ref }}'
     # - name: Create Pull Request
     #   uses: peter-evans/create-pull-request@v4
     #   env:
