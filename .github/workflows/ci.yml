@@ -41,18 +41,9 @@ jobs:
     needs: build
     name: Deploy to staging
     environment:
-        name: staging
+        name: release
     runs-on: ubuntu-latest
     steps:
-    # Deploy to App Service Linux
-    - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v2
-      id: deploy_staging
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-        slot-name: staging
-
     -  name: Set up Python ${{ matrix.python-version }}
        uses: actions/setup-python@v4
        with:
