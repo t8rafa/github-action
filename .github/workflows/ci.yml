@@ -62,23 +62,17 @@ jobs:
       name: release
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
+    - name: checkout
       uses: actions/checkout@v3
       with:
-        path: main
-    - name: creating feature branch
-      uses: peterjgrainger/action-create-branch@v2.2.0
+        ref: main
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4
       env:
         GITHUB_TOKEN: ${{ secrets.token }}
       with:
-        branch: 'feature-candidate/${{ github.head_ref }}'
-    # - name: Create Pull Request
-    #   uses: peter-evans/create-pull-request@v4
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.token }}
-    #   with:
-    #     base: feature-candidate/${{ github.head_ref }}
-    #     delete-branch: false
+        base: '${{ github.event.pull_request.head.sha }}'
+        delete-branch: false
       
 
     
