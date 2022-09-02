@@ -1,8 +1,5 @@
-# save this as app.py
-from flask import Flask
+import requests
 
-app = Flask(__name__)
-
-@app.route("/")
-def hello():
-    return "Hello, World!"
+def test_AnyName():
+    r=requests.get("https://www.google.com/")
+    assert 200==r.status_code, "has to bee 200"
