@@ -72,7 +72,7 @@ jobs:
         git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
-        git checkoub -b teste
+        git checkout -b teste
         git push --set-upstream origin teste
     - name: creating feature candidate
       uses: peterjgrainger/action-create-branch@v2.2.0
