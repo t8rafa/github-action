@@ -99,9 +99,9 @@ jobs:
         git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
-        git checkout -b fc/teste1
-        git push --set-upstream origin fc/teste1
-        git push origin --delete feature/teste
+#        git checkout -b fc/teste1
+#        git push --set-upstream origin fc/teste1
+#        git push origin --delete feature/teste
 
 ########################################################################################################
 ######Criando tag - depois necessário mudar para utilizar versionamento correto
