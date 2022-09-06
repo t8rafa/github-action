@@ -1,33 +1,19 @@
-name: Mixed inputs
+name: Testing inputs
 
 on:
   workflow_dispatch:
     inputs:
-      name:
-        type: choice
-        description: Who to greet
-        options: 
-        - monalisa
-        - cschleiden
-      message:
+      zappts_approve:
+        description: 'Feature ready?'
         required: true
-      use-emoji:
-        type: boolean
-        description: Include  emojis
-      environment:
-        type: feature
+        default: 'true'
 
 jobs:
-  build:
-    environment:
-        name: feature
+  teste:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.7", "3.8"]
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
+      - if: github.event.inputs.zappts_approve == 'true'
+        name: Creating feature approved
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
