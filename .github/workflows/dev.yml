@@ -7,19 +7,11 @@ on:
         description: 'Zappts approved?'
         required: true
         default: 'false'
-    name:
-        type: choice
-        description:  selecione
-        options: 
-        - teste
-        - cschleiden
-        required: true
-    message:
-      required: true
 
 
 jobs:
   teste:
+    needs: zappts
     runs-on: ubuntu-latest
     steps:
       - if: github.event.inputs.zappts_approve == 'true'
@@ -31,6 +23,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+#Pegar valor da branch que foi acionada na trigger, dar checkou nela e criar a partir dela a nova. 
+#Realizar estágio onde valida se está ok no environemnts anteriores 
+# Só realizar algo se a branch for igual feature/**
+
+
+
 ##deletar versão publicada em dev, qa e zappts
 #      "${{ github.event.inputs.message }}
 #      github.event.inputs.use-emoji == 'true' 
