@@ -88,21 +88,13 @@ jobs:
         git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
-        git checkout -b fc/teste11
-        git push --set-upstream origin fc/teste11
-        git push origin --delete feature/teste
+#        git checkout -b fc/teste11
+#        git push --set-upstream origin fc/teste11
+#        git push origin --delete feature/teste
+########################################################################################################
 #realizar a criação da branch fc/xyz
 #Deletar a branch feature/xyz
-    - name: git
-      run: |
-        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-        git --version
-        git config user.name "GitHub Actions Bot"
-        git config user.email "<steff.vasem@gmail.com"
-#        git checkout -b fc/teste1
-#        git push --set-upstream origin fc/teste1
-#        git push origin --delete feature/teste
-
+########################################################################################################
 ########################################################################################################
 ######Criando tag - depois necessário mudar para utilizar versionamento correto
 ########################################################################################################
