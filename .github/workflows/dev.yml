@@ -1,0 +1,37 @@
+name: Generate feature candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      zappts_approve:
+        description: 'Zappts approved?'
+        required: true
+        default: 'false'
+    name:
+        type: choice
+        description:  selecione
+        options: 
+        - teste
+        - cschleiden
+        required: true
+    message:
+      required: true
+
+
+jobs:
+  teste:
+    runs-on: ubuntu-latest
+    steps:
+      - if: github.event.inputs.zappts_approve == 'true'
+        name: Creating feature approved
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+##deletar versão publicada em dev, qa e zappts
+#      "${{ github.event.inputs.message }}
+#      github.event.inputs.use-emoji == 'true' 
+#      ${{ github.event.inputs.name }}"
