@@ -1,4 +1,4 @@
-name: Inputs to generate feature candidate
+name: Generate feature candidate
 
 on:
   workflow_dispatch:
@@ -13,6 +13,10 @@ on:
         options: 
         - teste
         - cschleiden
+        required: true
+    message:
+      required: true
+
 
 jobs:
   teste:
@@ -28,3 +32,6 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 ##deletar versão publicada em dev, qa e zappts
+#      "${{ github.event.inputs.message }}
+#      github.event.inputs.use-emoji == 'true' 
+#      ${{ github.event.inputs.name }}"
