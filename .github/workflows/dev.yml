@@ -9,7 +9,7 @@ on:
         default: 'false'
     name:
         type: choice
-        description: 
+        description:  selecione
         options: 
         - teste
         - cschleiden
