@@ -1,20 +1,38 @@
-name: Creating tag
+name: Creating new version
 
 on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Generate tag from a rc'
+        description: 'Input next version'
         required: true
         default: '0.0.0'
 
-
 jobs:
-  tag:
-    name:  Create a tag
+  release-candidate:
+    name: Create branch RC
     environment:
       name: zappts
-#      url: ${{ steps.step_id.outputs.url_output }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: git
+      run: |
+        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+        git --version
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<steff.vasem@gmail.com"
+        git checkout main
+        git checkout -b rc/"${{ github.event.inputs.version }}"
+        git push --set-upstream origin rc/"${{ github.event.inputs.version }}"
+  tag:
+    name:  Create a tag
+    needs: release-candidate
+    environment:
+      name: zappts
     runs-on: ubuntu-latest
     steps:
     - name: Git checkout
@@ -33,6 +51,7 @@ jobs:
         git push origin --delete rc/"${{ github.event.inputs.tag }}"
   release:
     name: Create Release
+    needs: tag
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -41,13 +60,12 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
         with:
-          tag_name: v"${{ github.event.inputs.tag }}
-          release_name: v"${{ github.event.inputs.tag }}
+          tag_name: v${{ github.event.inputs.tag }}
+          release_name: v${{ github.event.inputs.tag }}
           body: |
             Changes in this Release
-            - First Change
-            - Second Change
+            - Elaborar melhor notas da release
           draft: false
           prerelease: false
