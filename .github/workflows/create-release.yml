@@ -27,7 +27,7 @@ jobs:
         git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
-        git checkout rc/"${{ github.event.inputs.tag }}"
+        git checkout "${{ github.event.inputs.tag }}"
         git tag v"${{ github.event.inputs.tag }}"
         git push --set-upstream origin v"${{ github.event.inputs.tag }}"
-        git push origin --delete rc/"${{ github.event.inputs.tag }}"
+        git push origin --delete "${{ github.event.inputs.tag }}"
