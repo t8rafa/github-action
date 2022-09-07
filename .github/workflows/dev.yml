@@ -3,28 +3,34 @@ name: Generate feature candidate
 on:
   workflow_dispatch:
     inputs:
-      zappts_approve:
-        description: 'Zappts approved?'
+      version:
+        description: 'Input new version'
         required: true
-        default: 'false'
+        default: '0.0.0'
 
 
 jobs:
-  teste:
+  release:
     needs: zappts
+    name: Feature ready
+    environment:
+      name: zappts
+#      url: ${{ steps.step_id.outputs.url_output }}
     runs-on: ubuntu-latest
     steps:
-      - if: github.event.inputs.zappts_approve == 'true'
-        name: Creating feature approved
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-#Pegar valor da branch que foi acionada na trigger, dar checkou nela e criar a partir dela a nova. 
+    - name: Git checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: git
+      run: |
+        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+        git --version
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<steff.vasem@gmail.com"
+        git checkout -b rc/"${{ github.event.inputs.version }}
+        git push --set-upstream origin rc/"${{ github.event.inputs.version }}
+#        git push origin --delete feature/testeque foi acionada na trigger, dar checkou nela e criar a partir dela a nova. 
 #Realizar estágio onde valida se está ok no environemnts anteriores 
 # Só realizar algo se a branch for igual feature/**
 
