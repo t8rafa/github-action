@@ -19,7 +19,7 @@ jobs:
     environment:
       name: zappts
     runs-on: ubuntu-latest
-    if: ${{ inputs.new-release-version }}
+    if: ${{ github.event.inputs.new-release-version == 'true' }}
     steps:
     - name: Git checkout
       uses: actions/checkout@v2
