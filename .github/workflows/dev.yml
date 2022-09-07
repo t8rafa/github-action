@@ -8,10 +8,9 @@ on:
         required: true
         default: '0.0.0'
 
-
 jobs:
-  release:
-    name: Feature ready
+  release-candidate:
+    name: Create branch RC
     environment:
       name: zappts
 #      url: ${{ steps.step_id.outputs.url_output }}
@@ -27,6 +26,7 @@ jobs:
         git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
+        git checkout main
         git checkout -b rc/"${{ github.event.inputs.version }}"
         git push --set-upstream origin rc/"${{ github.event.inputs.version }}"
 #        git push origin --delete feature/testeque foi acionada na trigger, dar checkou nela e criar a partir dela a nova. 
