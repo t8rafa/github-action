@@ -76,6 +76,7 @@ jobs:
     name: Feature ready
     environment:
       name: zappts
+#      url: ${{ steps.step_id.outputs.url_output }}
     runs-on: ubuntu-latest
     steps:
     - name: Git checkout
