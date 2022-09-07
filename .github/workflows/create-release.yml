@@ -36,7 +36,7 @@ jobs:
         git push --set-upstream origin rc/"${{ github.event.inputs.tag }}"
   tag:
     name:  Create a tag
-    needs: release-candidate
+    # needs: release-candidate
     environment:
       name: zappts
     runs-on: ubuntu-latest
