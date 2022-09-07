@@ -7,7 +7,7 @@ on:
         required: true
         default: '0.0.0'
       new-release-version:
-        description: 'Criar branch de RC?'
+        description: 'New RC branches?'
         required: true
         default: 'false'
 jobs:
@@ -86,10 +86,12 @@ jobs:
         git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
+#Verificar trigger para depender mas poder promover sozinho
   promotion-to-main:
     name:  promote-to-main
     environment:
       name: production
+    needs: release
     runs-on: ubuntu-latest
     steps:
     - name: Git checkout
