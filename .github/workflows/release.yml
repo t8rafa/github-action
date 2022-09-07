@@ -67,3 +67,21 @@ jobs:
             - Elaborar melhor notas da release
           draft: false
           prerelease: false
+  promotion-to-main:
+    name:  promote-to-main
+    environment:
+      name: production
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: git
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<steff.vasem@gmail.com"
+        git checkout main
+        git merge --squash v"${{ github.event.inputs.tag }}"
+        git commit
+        git push --set-upstream origin main

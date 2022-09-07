@@ -2,17 +2,7 @@ name: Deploy
 on:
   push:
     branches:
-      - 'feature/**'
-      - main
-      - hotfix/**
-      - bugfix/**
-  workflow_dispatch:
-    inputs:
-      ready-to-qa:
-        description: 'ready to qa?'
-        required: true
-        default: 'false'
-        
+      - 'feature/**' 
 jobs:
   QA:
     name: Publish QA instance
@@ -37,6 +27,7 @@ jobs:
     name: Publish Zappts instance
     environment:
         name: zappts
+#      url: ${{ steps.step_id.outputs.url_output }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -50,11 +41,14 @@ jobs:
        run: |
          python -m pip install --upgrade pip
          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+###
+#Triggar de acordo com última tag commitada
+#Ai deploya o código da tag comida a instância no app engine e promove para ser a consumida pelo pessoal do super app.
+###
   release:
-    needs: zappts
     name: Feature ready
     environment:
-      name: zappts
+      name: release
 #      url: ${{ steps.step_id.outputs.url_output }}
     runs-on: ubuntu-latest
     steps:
@@ -68,12 +62,30 @@ jobs:
         git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
-  production:
-    needs: zappts
+###
+#Triggar com commit na main
+#Ai deploya o código da main uma instância no app engine e promove para ser a consumida tanto pela porto quanto pela altar.
+###
+  production_atar:
     name: Feature ready
     environment:
-      name: zappts
-#      url: ${{ steps.step_id.outputs.url_output }}
+      name: production
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: git
+      run: |
+        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+        git --version
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<steff.vasem@gmail.com"
+  production_porto:
+    name: Feature ready
+    environment:
+      name: production
     runs-on: ubuntu-latest
     steps:
     - name: Git checkout
