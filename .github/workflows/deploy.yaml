@@ -9,7 +9,7 @@ jobs:
     environment:
         name: qa
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.ready-to-qa == 'true' }}
+#    if: ${{ github.event.inputs.ready-to-qa == 'true' }}
     strategy:
       matrix:
         python-version: ["3.7"]
