@@ -32,9 +32,13 @@ jobs:
   tag:
     name:  Create a tag
     environment:
-      name: zappts
+      name: release
     runs-on: ubuntu-latest
     steps:
+    - name: Sleep for 10 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '10s'
     - name: Git checkout
       uses: actions/checkout@v2
       with:
@@ -50,6 +54,8 @@ jobs:
   release:
     name: Create Release
     needs: tag
+    environment:
+      name: release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
