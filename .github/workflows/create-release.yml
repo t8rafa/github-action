@@ -8,9 +8,9 @@ on:
         required: true
         default: '0.0.0'
       new-release-version:
-        description: 'true or false'
+        description: 'Nova branch RC?'
         required: true
-        type: boolean
+        default: 'false'
 
 #      github.event.inputs.use-emoji == 'true' 
 jobs:
