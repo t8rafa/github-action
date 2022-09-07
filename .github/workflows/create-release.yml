@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-  release:
+  tag:
     name:  Create a tag
     environment:
       name: zappts
@@ -31,3 +31,23 @@ jobs:
         git tag v"${{ github.event.inputs.tag }}"
         git push --set-upstream origin v"${{ github.event.inputs.tag }}"
         git push origin --delete rc/"${{ github.event.inputs.tag }}"
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v"${{ github.event.inputs.tag }}
+          release_name: v"${{ github.event.inputs.tag }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
