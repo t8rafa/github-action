@@ -7,13 +7,19 @@ on:
         description: 'Input next version'
         required: true
         default: '0.0.0'
+      new-release-version:
+        description: 'true or false'
+        required: true
+        type: boolean
 
+#      github.event.inputs.use-emoji == 'true' 
 jobs:
   release-candidate:
     name: Create branch RC
     environment:
       name: zappts
     runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.new-release-version == "true" }}
     steps:
     - name: Git checkout
       uses: actions/checkout@v2
