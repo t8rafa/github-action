@@ -67,6 +67,25 @@ jobs:
             - Elaborar melhor notas da release
           draft: false
           prerelease: false
+##Deployar a nova release em release
+  publish-release:
+    name: Publish new release 
+    needs: release
+    environment:
+      name: release
+#      url: ${{ steps.step_id.outputs.url_output }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: git
+      run: |
+        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+        git --version
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<steff.vasem@gmail.com"
   promotion-to-main:
     name:  promote-to-main
     environment:
