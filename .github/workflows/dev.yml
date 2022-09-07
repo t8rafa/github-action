@@ -27,8 +27,8 @@ jobs:
         git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
-        git checkout -b rc/"${{ github.event.inputs.version }}
-        git push --set-upstream origin rc/"${{ github.event.inputs.version }}
+        git checkout -b rc:"${{ github.event.inputs.version }}
+        git push --set-upstream origin rc:"${{ github.event.inputs.version }}
 #        git push origin --delete feature/testeque foi acionada na trigger, dar checkou nela e criar a partir dela a nova. 
 #Realizar estágio onde valida se está ok no environemnts anteriores 
 # Só realizar algo se a branch for igual feature/**
