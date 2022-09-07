@@ -26,8 +26,8 @@ jobs:
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
         git checkout main
-        git checkout -b rc/"${{ github.event.inputs.version }}"
-        git push --set-upstream origin rc/"${{ github.event.inputs.version }}"
+        git checkout -b rc/"${{ github.event.inputs.tag }}"
+        git push --set-upstream origin rc/"${{ github.event.inputs.tag }}"
   tag:
     name:  Create a tag
     needs: release-candidate
