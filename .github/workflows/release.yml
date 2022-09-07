@@ -1,5 +1,4 @@
 name: Creating new version
-
 on:
   workflow_dispatch:
     inputs:
@@ -8,11 +7,9 @@ on:
         required: true
         default: '0.0.0'
       new-release-version:
-        description: 'Nova branch RC?'
+        description: 'Criar branch de RC?'
         required: true
         default: 'false'
-
-#      github.event.inputs.use-emoji == 'true' 
 jobs:
   release-candidate:
     name: Create branch RC
@@ -27,8 +24,6 @@ jobs:
         fetch-depth: '0'
     - name: git
       run: |
-        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-        git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
         git checkout main
@@ -36,7 +31,6 @@ jobs:
         git push --set-upstream origin rc/"${{ github.event.inputs.tag }}"
   tag:
     name:  Create a tag
-    # needs: release-candidate
     environment:
       name: zappts
     runs-on: ubuntu-latest
@@ -47,8 +41,6 @@ jobs:
         fetch-depth: '0'
     - name: git
       run: |
-        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
-        git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
         git checkout rc/"${{ github.event.inputs.tag }}"
