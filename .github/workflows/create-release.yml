@@ -1,4 +1,4 @@
-name: Generate feature candidate
+name: Creating tag
 
 on:
   workflow_dispatch:
