@@ -2,7 +2,10 @@ name: Deploy
 on:
   push:
     branches:
-      - 'feature/**' 
+      - 'feature/**'
+  workflow_dispatch:
+  
+  
 jobs:
   QA:
     name: Publish QA instance
