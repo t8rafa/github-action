@@ -16,3 +16,4 @@ class Wallet(object):
 
     def add_cash(self, amount):
         self.balance += amount
+        print('Saldo adicionado')
