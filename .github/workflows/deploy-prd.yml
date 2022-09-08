@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - 'main'
+  workflow_dispatch:
+  
 jobs:
 ###
 #Triggar de acordo com última tag commitada
