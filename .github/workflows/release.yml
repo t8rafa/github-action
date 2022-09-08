@@ -1,4 +1,4 @@
-name: Creating new version
+name: Creating a new version
 on:
   workflow_dispatch:
     inputs:
@@ -7,7 +7,7 @@ on:
         required: true
         default: '0.0.0'
       new-release-version:
-        description: 'Criar branch de RC?'
+        description: 'New RC branches?'
         required: true
         default: 'false'
 jobs:
@@ -32,9 +32,13 @@ jobs:
   tag:
     name:  Create a tag
     environment:
-      name: zappts
+      name: release
     runs-on: ubuntu-latest
     steps:
+    - name: Sleep for 10 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '10s'
     - name: Git checkout
       uses: actions/checkout@v2
       with:
@@ -50,6 +54,8 @@ jobs:
   release:
     name: Create Release
     needs: tag
+    environment:
+      name: release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -67,10 +73,13 @@ jobs:
             - Elaborar melhor notas da release
           draft: false
           prerelease: false
-  promotion-to-main:
-    name:  promote-to-main
+##Deployar a nova release em release
+  publish-release:
+    name: Publish new release 
+    needs: release
     environment:
-      name: production
+      name: release
+#      url: ${{ steps.step_id.outputs.url_output }}
     runs-on: ubuntu-latest
     steps:
     - name: Git checkout
@@ -79,9 +88,7 @@ jobs:
         fetch-depth: '0'
     - name: git
       run: |
+        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+        git --version
         git config user.name "GitHub Actions Bot"
         git config user.email "<steff.vasem@gmail.com"
-        git checkout main
-        git merge --squash v"${{ github.event.inputs.tag }}"
-        git commit
-        git push --set-upstream origin main

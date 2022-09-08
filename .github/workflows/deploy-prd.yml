@@ -1,0 +1,44 @@
+name: deploy-prd
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+###
+#Triggar de acordo com última tag commitada
+#Ai deploya o código da tag comida a instância no app engine e promove para ser a consumida pelo pessoal do super app.
+#Triggar com commit na main
+#Ai deploya o código da main uma instância no app engine e promove para ser a consumida tanto pela porto quanto pela altar.
+###
+  production_atar:
+    name: Publish to atar environment
+    environment:
+      name: production
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: git
+      run: |
+        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+        git --version
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<steff.vasem@gmail.com"
+  production_porto:
+    name: publish to porto environment
+    environment:
+      name: production
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: git
+      run: |
+        # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+        git --version
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<steff.vasem@gmail.com"
